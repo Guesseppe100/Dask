@@ -1,0 +1,9 @@
+data/
+.env
+__pycache__/
+.ipynb_checkpoints/
+.vscode/
+dask-worker-space/
+
+!sample_data_demo/
+!sample_data_demo/**
