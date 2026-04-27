@@ -1,6 +1,8 @@
 services:
   dask-scheduler:
-    image: daskdev/dask:2024.5.1
+    build:
+      context: .
+      dockerfile: docker/jupyter/Dockerfile
     container_name: infraestructura-dask-scheduler
     command: dask scheduler
     ports:
@@ -10,10 +12,12 @@ services:
       - ./data:/home/jovyan/data
       - ./sample_data_demo:/home/jovyan/sample_data_demo
       - ./output:/home/jovyan/output
-      - ./modules:/home/jovyan/modules
+      - ./dask/jobs:/home/jovyan/dask_jobs
 
   dask-worker:
-    image: daskdev/dask:2024.5.1
+    build:
+      context: .
+      dockerfile: docker/jupyter/Dockerfile
     container_name: infraestructura-dask-worker
     command: dask worker tcp://dask-scheduler:8786
     depends_on:
@@ -24,7 +28,7 @@ services:
       - ./data:/home/jovyan/data
       - ./sample_data_demo:/home/jovyan/sample_data_demo
       - ./output:/home/jovyan/output
-      - ./modules:/home/jovyan/modules
+      - ./dask/jobs:/home/jovyan/dask_jobs
 
   jupyter:
     build:
@@ -41,7 +45,7 @@ services:
       - ./data:/home/jovyan/data
       - ./sample_data_demo:/home/jovyan/sample_data_demo
       - ./output:/home/jovyan/output
-      - ./modules:/home/jovyan/modules
+      - ./dask/jobs:/home/jovyan/dask_jobs
     depends_on:
       - dask-scheduler
       - dask-worker

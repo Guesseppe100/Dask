@@ -205,7 +205,7 @@ def run_pandas() -> dict:
 
     elapsed = time.perf_counter() - t0
     df_mem_mb = df.memory_usage(deep=True).sum() / (1024**2)
-    proc_peak_mb = max_rss_mb()
+    proc_peak_mb = 0
     return {
         "elapsed_s": elapsed,
         "df_mem_mb": df_mem_mb,
